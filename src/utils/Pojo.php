@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\common\utils;
+namespace Zsgogo\utils;
 
 use Hyperf\Utils\Contracts\Arrayable;
 use Hyperf\Utils\Str;
@@ -9,9 +9,8 @@ use ReflectionClass;
 use ReflectionException;
 use ReflectionProperty;
 use Hyperf\HttpServer\Contract\RequestInterface;
-use App\common\constant\ErrorNums;
-use App\common\exception\AppException;
-
+use Zsgogo\constant\ErrorNums;
+use Zsgogo\exception\AppException;
 
 
 abstract class Pojo implements Arrayable {
