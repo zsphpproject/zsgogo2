@@ -1,6 +1,12 @@
 {
-    "name": "hyperf/hyperf-skeleton",
-    "type": "project",
+    "name": "zsgogo/hyperf",
+    "type": "library",
+    "authors": [
+        {
+            "name": "zs",
+            "email": "279677563@qq.com"
+        }
+    ],
     "keywords": [
         "php",
         "swoole",
