@@ -117,6 +117,8 @@ abstract class Pojo implements Arrayable {
                     throw new AppException(ErrorNums::METHOD_NOT_PUBLIC,'method ' . $this->reflectionClass->getName() . '::' . $setDataFuncName . ' is not public!');
                 }
                 $reflectionMethod->invokeArgs($this, [$propertyValue]);
+            }else{
+                throw new AppException(ErrorNums::Unauthorized,"缺少参数");
             }
         }
     }
