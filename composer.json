@@ -19,6 +19,7 @@
     "license": "Apache-2.0",
     "require": {
         "php": ">=8.0",
+        "firebase/php-jwt": "^6.4",
         "godruoyi/php-snowflake": "2.2.2",
         "hyperf/cache": "~2.2.0",
         "hyperf/command": "~2.2.0",
@@ -35,7 +36,8 @@
         "hyperf/json-rpc": "~2.2.0",
         "hyperf/rpc": "~2.2.0",
         "hyperf/rpc-client": "~2.2.0",
-        "hyperf/rpc-server": "~2.2.0"
+        "hyperf/rpc-server": "~2.2.0",
+        "hyperf/filesystem": "~2.2.0"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.0",
