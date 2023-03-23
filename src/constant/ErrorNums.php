@@ -21,6 +21,7 @@ class ErrorNums
 
     const DB_ERROR = 20001; // 数据库错误
     const SSO_ERROR = 20008;
+    const GUZZLE_REQUEST_FAIL = 20009;
 
 
     const FREQUENT_REQUEST = 400000;
@@ -63,6 +64,7 @@ class ErrorNums
         ErrorNums::UNBOUNDED_MODIFICATION => "无权修改",
         ErrorNums::REPEAT_SUBMIT => "请勿重复提交",
         ErrorNums::STATUS_ERROR => "状态有误",
+        ErrorNums::GUZZLE_REQUEST_FAIL => "请求失败"
     ];
 
 
