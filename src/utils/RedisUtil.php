@@ -4,7 +4,7 @@ namespace Zsgogo\utils;
 
 use Hyperf\Redis\Redis;
 use Hyperf\Utils\ApplicationContext;
-use RedisException;
+
 
 class RedisUtil {
 
@@ -20,12 +20,12 @@ class RedisUtil {
 
 
     /**
-     * key,value相关操作
+     * key,value操作
      * @param string $key
-     * @return array|\Redis
-     * @throws RedisException
+     * @return array
+     * @throws \RedisException
      */
-    public function keys(string $key = "*"): array|\Redis {
+    public function keys(string $key = "*"): array {
         return $this->redis->keys($key);
     }
 
@@ -37,23 +37,23 @@ class RedisUtil {
         return $this->redis->get($key);
     }
 
-    public function delete(string|array $key): int|\Redis {
+    public function delete(string|array $key): int {
         return $this->redis->del($key);
     }
 
 
     /**
-     * list 相关操作
+     * list操作
      * @param string $key
      * @param string $value
      * @return mixed
-     * @throws RedisException
+     * @throws \RedisException
      */
     public function lpush(string $key,string $value): mixed {
         return $this->redis->lpush($key,$value);
     }
 
-    public function rpush(string $key,string $value): bool|int|\Redis {
+    public function rpush(string $key,string $value): bool|int {
         return $this->redis->rpush($key,$value);
     }
 
@@ -65,7 +65,7 @@ class RedisUtil {
         return $this->redis->rpop($key);
     }
 
-    public function lrange(string $key,int $start = 0,int $end = -1): array|\Redis {
+    public function lrange(string $key,int $start = 0,int $end = -1): array {
         return $this->redis->lrange($key,$start,$end);
     }
 
@@ -75,11 +75,11 @@ class RedisUtil {
 
 
     /**
-     * 无序集合set相关操作
+     * zset操作
      * @param string $key
      * @param string $value
      * @return mixed
-     * @throws RedisException
+     * @throws \RedisException
      */
     public function sadd(string $key,string $value): mixed {
         return $this->redis->sadd($key,$value);
@@ -89,11 +89,11 @@ class RedisUtil {
         return $this->redis->smembers($key);
     }
 
-    public function scard(string $key): int|\Redis {
+    public function scard(string $key): int {
         return $this->redis->scard($key);
     }
 
-    public function srem(string $key,string $value): int|\Redis {
+    public function srem(string $key,string $value): int {
         return $this->redis->srem($key,$value);
     }
 
