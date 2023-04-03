@@ -14,11 +14,14 @@ class BaseModel extends Model {
      * @param array $param
      * @param array $where
      * @param array $allowFields
+     * @param array $with
      * @return \Hyperf\Database\Model\Collection|array
      */
-    public function getList(array $param,array $where, array $allowFields): \Hyperf\Database\Model\Collection|array {
+    public function getList(array $param,array $where, array $allowFields,array $with = []): \Hyperf\Database\Model\Collection|array {
+        $param["sort"] = $param["sort"] ?? "";
         $order = Common::getSort($param["sort"]) . "," . $this->primaryKey . " desc";
         return self::where($where)
+            ->with($with)
             ->orderByRaw($order)
             ->select($allowFields)
             ->get();
