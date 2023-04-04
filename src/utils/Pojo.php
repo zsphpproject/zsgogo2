@@ -109,20 +109,20 @@ abstract class Pojo implements Arrayable {
         $properties = $this->reflectionClass->getProperties(ReflectionProperty::IS_PRIVATE);
         foreach ($properties as $property) {
             $propertySnakeName = Str::snake($property->getName());
-            if (!isset($inputData[$propertySnakeName])) {
-                $inputData[$propertySnakeName] = null;
+            if (isset($inputData[$propertySnakeName])) {
+                $propertyValue = $inputData[$propertySnakeName];
+                $propertyName = $property->getName();
+                $setDataFuncName = 'set' . ucfirst($propertyName);
+                if (!$this->reflectionClass->hasMethod($setDataFuncName)) {
+                    throw new AppException(ErrorNums::METHOD_NOT_EXISTS,'method ' . $this->reflectionClass->getName() . '::' . $setDataFuncName . ' not exists!');
+                }
+                $reflectionMethod = $this->reflectionClass->getMethod($setDataFuncName);
+                if (!$reflectionMethod->isPublic()) {
+                    throw new AppException(ErrorNums::METHOD_NOT_PUBLIC,'method ' . $this->reflectionClass->getName() . '::' . $setDataFuncName . ' is not public!');
+                }
+                $reflectionMethod->invokeArgs($this, [$propertyValue]);
             }
-            $propertyValue = $inputData[$propertySnakeName];
-            $propertyName = $property->getName();
-            $setDataFuncName = 'set' . ucfirst($propertyName);
-            if (!$this->reflectionClass->hasMethod($setDataFuncName)) {
-                throw new AppException(ErrorNums::METHOD_NOT_EXISTS,'method ' . $this->reflectionClass->getName() . '::' . $setDataFuncName . ' not exists!');
-            }
-            $reflectionMethod = $this->reflectionClass->getMethod($setDataFuncName);
-            if (!$reflectionMethod->isPublic()) {
-                throw new AppException(ErrorNums::METHOD_NOT_PUBLIC,'method ' . $this->reflectionClass->getName() . '::' . $setDataFuncName . ' is not public!');
-            }
-            $reflectionMethod->invokeArgs($this, [$propertyValue]);
+
         }
     }
 }
