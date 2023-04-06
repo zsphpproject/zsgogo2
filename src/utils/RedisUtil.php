@@ -73,6 +73,10 @@ class RedisUtil {
         return $this->redis->llen($key);
     }
 
+    public function expire(string $key,int $ttl): bool {
+        return $this->redis->expire($key,$ttl);
+    }
+
 
     /**
      * zset操作

@@ -94,7 +94,7 @@ class JwtUtil {
      * @return string
      * @throws AppException
      */
-    private function getTypeToken(string $token): string {
+    public function getTypeToken(string $token): string {
         $contains = Str::contains($token, ["Bearer", "bearer"]);
         if (!$contains) throw new AppException(ErrorNums::INVALID_AUTH,"token type error");
         return trim(str_replace("Bearer", "", $token));
