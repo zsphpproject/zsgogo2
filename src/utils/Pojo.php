@@ -9,7 +9,7 @@ use ReflectionClass;
 use ReflectionException;
 use ReflectionProperty;
 use Hyperf\HttpServer\Contract\RequestInterface;
-use Zsgogo\constant\ErrorNums;
+use App\common\constant\ErrorNums;
 use Zsgogo\exception\AppException;
 
 

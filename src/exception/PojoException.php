@@ -3,7 +3,7 @@
 namespace Zsgogo\exception;
 
 use Throwable;
-use Zsgogo\constant\ErrorNums;
+use App\common\constant\ErrorNums;
 
 class PojoException extends \Exception {
 

@@ -7,7 +7,7 @@ use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\RequestOptions;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
-use Zsgogo\constant\ErrorNums;
+use App\common\constant\ErrorNums;
 use Zsgogo\exception\AppException;
 
 class ClientRequest {
@@ -22,7 +22,7 @@ class ClientRequest {
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
-    public function send(string $baseUrl,string $path = "",string $method = "post",array $param = []): mixed {
+    public function send(string $baseUrl,string $path = "",string $method = "post",array $param = [],string $request_id = ""): mixed {
         $client = new Client([
             "base_uri" => $baseUrl,
             "timeout" => 10.0
@@ -31,27 +31,27 @@ class ClientRequest {
         $option[RequestOptions::JSON] = [];
         if (!empty($param)) $option[RequestOptions::JSON] = $param;
 
-        Log::get("guzzle_request")->info(json_encode($option,JSON_UNESCAPED_UNICODE));
+        Log::get("guzzle_request")->info(json_encode($option,JSON_UNESCAPED_UNICODE),["request_id" => $request_id]);
 
         try {
             $response = $client->request($method, $path, $option);
             $res = json_decode($response->getBody()->getContents(),true);
-            Log::get("guzzle_response")->info(json_encode($res,JSON_UNESCAPED_UNICODE));
+            Log::get("guzzle_response")->info(json_encode($res,JSON_UNESCAPED_UNICODE),["request_id" => $request_id]);
 
             if ($response->getStatusCode() == 200){
                 if ($res["code"] != 0) {
-                    Log::get("guzzle_response")->info("{$path}请求错误:" . $res["msg"]);
+                    Log::get("guzzle_response")->info("{$path}请求错误:" . $res["msg"],["request_id" => $request_id]);
                     throw new AppException(ErrorNums::INVALID_AUTH,$res["msg"]);
                 }
                 return $res["data"];
             }else{
                 $message = $response->getBody()->getContents();
-                Log::get("guzzle_response")->info("{$path}请求失败:" . $message);
+                Log::get("guzzle_response")->info("{$path}请求失败:" . $message,["request_id" => $request_id]);
                 throw new AppException(ErrorNums::INVALID_AUTH,$message);
             }
         }catch (GuzzleException $exception){
             $error = $exception->getMessage();
-            Log::get("guzzle_response")->info("{$path}求失败:" . $error);
+            Log::get("guzzle_response")->info("{$path}求失败:" . $error,["request_id" => $request_id]);
             throw new AppException(ErrorNums::INVALID_AUTH,$error);
         }
     }

@@ -9,8 +9,8 @@ class Common {
     // 排序
     const SORT = [
         "" => "",
-        "+" => "create_time asc","-" => "create_time desc",
-        "update_time+" => "update_time asc","update_time-" => "update_time desc",
+        "+" => "created_at asc","-" => "created_at desc",
+        "updated_at+" => "updated_at asc","updated_at-" => "updated_at desc",
         "start_time+" => "start_time asc","start_time-" => "start_time desc",
         "end_time+" => "end_time asc","end_time-" => "end_time desc",
     ];
@@ -29,7 +29,7 @@ class Common {
             }
             return implode(",",$array);
         }
-        return "create_time desc";
+        return "created_at desc";
     }
 
 }

@@ -2,7 +2,7 @@
 
 namespace Zsgogo\model;
 
-use Zsgogo\constant\Common;
+use App\common\constant\Common;
 use Hyperf\DbConnection\Model\Model;
 use Hyperf\Paginator\Paginator;
 use Hyperf\Utils\Collection;

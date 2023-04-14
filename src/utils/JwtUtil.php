@@ -7,7 +7,7 @@ use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 use Hyperf\Utils\Str;
 use League\Flysystem\Filesystem;
-use Zsgogo\constant\ErrorNums;
+use App\common\constant\ErrorNums;
 use Zsgogo\exception\AppException;
 
 class JwtUtil {

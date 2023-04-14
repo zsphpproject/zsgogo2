@@ -4,7 +4,7 @@ namespace Zsgogo\exception;
 
 use Hyperf\Server\Exception\ServerException;
 use Throwable;
-use Zsgogo\constant\ErrorNums;
+use App\common\constant\ErrorNums;
 
 class AppException extends ServerException {
 

@@ -2,7 +2,7 @@
 
 namespace Zsgogo\utils;
 
-use Zsgogo\constant\ErrorNums;
+use App\common\constant\ErrorNums;
 
 
 class ResponseJson {
