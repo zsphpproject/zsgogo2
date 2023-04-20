@@ -44,17 +44,17 @@ class ClientRequest {
             if ($response->getStatusCode() == 200){
                 if (isset($res["code"]) && $res["code"] != 0) {
                     Log::get("guzzle_response")->info("{$path}请求错误:" . $res["msg"],["request_id" => $request_id]);
-                    throw new AppException(ErrorNums::INVALID_AUTH,$res["msg"]);
+                    throw new AppException(ErrorNums::SERVER_ERROR,$res["msg"]);
                 }
                 if (isset($res["status"]) && $res["status"] != 0){
                     Log::get("guzzle_response")->info("{$path}请求错误:" . $res["message"],["request_id" => $request_id]);
-                    throw new AppException(ErrorNums::INVALID_AUTH,$res["message"]);
+                    throw new AppException(ErrorNums::SERVER_ERROR,$res["message"]);
                 }
                 return $res["data"];
             }else{
                 $message = $response->getBody()->getContents();
                 Log::get("guzzle_response")->info("{$path}请求失败:" . $message,["request_id" => $request_id]);
-                throw new AppException(ErrorNums::INVALID_AUTH,$message);
+                throw new AppException(ErrorNums::SERVER_ERROR,$message);
             }
         }catch (GuzzleException $exception){
             $error = $exception->getMessage();
