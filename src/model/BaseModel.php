@@ -35,7 +35,7 @@ class BaseModel extends Model {
      */
     public function getPageList(\Hyperf\Database\Model\Collection|array $voteList,array $param): Paginator {
         $collection = new Collection($voteList->toArray());
-        $list = $collection->forPage($param["page"], $param["size"])->toArray();
-        return new Paginator($list,$param["size"],$param["page"]);
+        $list = $collection->forPage((int)$param["page"], (int)$param["size"])->toArray();
+        return new Paginator($list,(int)$param["size"],(int)$param["page"]);
     }
 }
