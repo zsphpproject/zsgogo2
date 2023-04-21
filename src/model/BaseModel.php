@@ -19,7 +19,8 @@ class BaseModel extends Model {
      */
     public function getList(array $param,array $where, array $allowFields,array $with = []): \Hyperf\Database\Model\Collection|array {
         $param["sort"] = $param["sort"] ?? "";
-        $order = Common::getSort($param["sort"]) . "," . $this->primaryKey . " desc";
+        // $order = Common::getSort($param["sort"]) . "," . $this->primaryKey . " desc";
+        $order = Common::getSort($param["sort"]);
         return self::where($where)
             ->with($with)
             ->orderByRaw($order)

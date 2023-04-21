@@ -34,7 +34,7 @@ class JwtUtil {
 
 
     public function __construct(Filesystem $filesystem,array $config = []) {
-        if (!empty($config)) $config = config("jwt");
+        if (empty($config)) $config = config("jwt");
         $this->privateKey = $filesystem->read($config["privateKey"]);
         $this->publicKey = $filesystem->read($config["publicKey"]);
         $this->validity = $config["validity"];
