@@ -54,6 +54,7 @@ abstract class Pojo implements Arrayable {
     public function __construct(RequestInterface $request, array $param = []) {
         // if (empty($param)) {
         $inputData = $request->all();
+        $inputData = isset($inputData[0]) ? $inputData[0] : $inputData;
         $inputData = $this->fitterData($inputData ?? []);
         if ($request->getMethod() == "GET") {
             $getArray = $request->all();
@@ -110,7 +111,7 @@ abstract class Pojo implements Arrayable {
         foreach ($properties as $property) {
             $propertySnakeName = Str::snake($property->getName());
             if (isset($inputData[$propertySnakeName])) {
-                $propertyValue = $inputData[$propertySnakeName] ?: $property->getDefaultValue();
+                $propertyValue = $inputData[$propertySnakeName] ?? $property->getDefaultValue();
                 $propertyName = $property->getName();
                 $setDataFuncName = 'set' . ucfirst($propertyName);
                 if (!$this->reflectionClass->hasMethod($setDataFuncName)) {

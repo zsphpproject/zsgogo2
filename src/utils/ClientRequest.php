@@ -59,7 +59,7 @@ class ClientRequest {
         }catch (GuzzleException $exception){
             $error = $exception->getMessage();
             Log::get("guzzle_response")->info("{$path}求失败:" . $error,["request_id" => $request_id]);
-            throw new AppException(ErrorNums::INVALID_AUTH,$error);
+            throw new AppException(ErrorNums::SERVER_ERROR,$error);
         }
     }
 
