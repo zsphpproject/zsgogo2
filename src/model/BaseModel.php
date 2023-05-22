@@ -30,12 +30,12 @@ class BaseModel extends Model {
 
     /**
      * 返回分页
-     * @param \Hyperf\Database\Model\Collection|array $voteList
+     * @param \Hyperf\Database\Model\Collection|array $collection
      * @param array $param
      * @return Paginator
      */
-    public function getPageList(\Hyperf\Database\Model\Collection|array $voteList,array $param): Paginator {
-        $collection = new Collection($voteList->toArray());
+    public function getPageList(\Hyperf\Database\Model\Collection|array $collection,array $param): Paginator {
+        $collection = new Collection($collection->toArray());
         $list = $collection->forPage((int)$param["page"], (int)$param["size"])->toArray();
         return new Paginator($list,(int)$param["size"],(int)$param["page"]);
     }
