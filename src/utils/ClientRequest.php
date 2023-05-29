@@ -5,6 +5,7 @@ namespace Zsgogo\utils;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\RequestOptions;
+use Hyperf\Utils\Str;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use App\common\constant\ErrorNums;
@@ -58,8 +59,11 @@ class ClientRequest {
             }
         }catch (GuzzleException $exception){
             $error = $exception->getMessage();
-            Log::get("guzzle_response")->info("{$path}求失败:" . $error,["request_id" => $request_id]);
-            throw new AppException(ErrorNums::SERVER_ERROR,$error);
+            $str = "Client error: `POST ".env("SHOP_BASE_URL") . $path ."` resulted in a `".$exception->getCode()." Bad Request` response:";
+            $error2 = Str::replace($str,"",$error);
+            $error2 = json_decode($error2,true);
+            Log::get("guzzle_response")->info("{$path}求失败:" . $error2["message"],["request_id" => $request_id]);
+            throw new AppException(ErrorNums::SERVER_ERROR,$error2["message"] ?? "请求应用未知错误");
         }
     }
 
