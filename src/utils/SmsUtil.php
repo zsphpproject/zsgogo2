@@ -29,7 +29,7 @@ class SmsUtil {
         try {
             $easySms->send($mobile, ['content' => $content ?? '您的验证码为: ' . $code, 'template' => $template, 'data' => ['code' => $code],]);
         } catch (InvalidArgumentException|NoGatewayAvailableException $e) {
-            throw new AppException(ErrorNums::EXECUTION_ERROR,$e->getMessage());
+            throw new AppException(ErrorNums::EXECUTION_ERROR,json_encode($e->getExceptions()));
         }
     }
 
