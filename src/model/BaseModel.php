@@ -10,22 +10,33 @@ use Hyperf\Utils\Collection;
 class BaseModel extends Model {
 
     /**
-     * 返回list
+     * 返回list/分页list 默认分页
      * @param array $param
      * @param array $where
      * @param array $allowFields
      * @param array $with
-     * @return \Hyperf\Database\Model\Collection|array
+     * @param int $noPaging
+     * @return object
      */
-    public function getList(array $param,array $where, array $allowFields,array $with = []): \Hyperf\Database\Model\Collection|array {
+    public function getList(array $param,array $where, array $allowFields,array $with = [],int $noPaging = 0): object {
         $param["sort"] = $param["sort"] ?? "";
         // $order = Common::getSort($param["sort"]) . "," . $this->primaryKey . " desc";
         $order = Common::getSort($param["sort"]);
-        return self::where($where)
-            ->with($with)
-            ->orderByRaw($order)
-            ->select($allowFields)
-            ->get();
+
+        if ($noPaging == 1){
+            return self::where($where)
+                ->with($with)
+                ->orderByRaw($order)
+                ->select($allowFields)
+                ->get();
+        }else{
+            return self::where($where)
+                ->with($with)
+                ->orderByRaw($order)
+                ->select($allowFields)
+                ->paginate($param["size"]);
+        }
+
     }
 
     /**
@@ -34,9 +45,9 @@ class BaseModel extends Model {
      * @param array $param
      * @return Paginator
      */
-    public function getPageList(\Hyperf\Database\Model\Collection|array $collection,array $param): Paginator {
-        $collection = new Collection($collection->toArray());
-        $list = $collection->forPage((int)$param["page"], (int)$param["size"])->toArray();
+    public function getPageList(Collection|array $collection, array $param): Paginator {
+        if (is_array($collection)) $collection = new Collection($collection);
+        $list = array_values($collection->forPage((int)$param["page"], (int)$param["size"])->toArray());
         return new Paginator($list,(int)$param["size"],(int)$param["page"]);
     }
 }
