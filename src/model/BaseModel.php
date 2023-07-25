@@ -34,7 +34,7 @@ class BaseModel extends Model {
                 ->with($with)
                 ->orderByRaw($order)
                 ->select($allowFields)
-                ->paginate($param["size"]);
+                ->paginate($param["size"],$allowFields,"page",$param["page"]);
         }
 
     }
